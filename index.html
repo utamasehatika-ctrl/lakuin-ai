@@ -2,8 +2,8 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
+  <title>Lakuin AI – Konten Auto Jualan</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lakuin AI</title>
 
   <style>
     body {
@@ -11,24 +11,24 @@
       font-family: Arial, sans-serif;
       background: linear-gradient(135deg, #16a34a, #22c55e);
       color: #fff;
+      padding: 40px 16px;
       text-align: center;
-      padding: 40px 20px;
     }
 
     .box {
       background: rgba(0,0,0,0.25);
-      border-radius: 16px;
-      padding: 32px;
+      border-radius: 18px;
+      padding: 28px;
       max-width: 420px;
-      margin: 0 auto 30px;
+      margin: 0 auto 28px;
     }
 
-    h1, h2 {
-      margin-top: 0;
+    h1, h2, h3 {
+      margin-bottom: 12px;
     }
 
     p {
-      line-height: 1.6;
+      line-height: 1.5;
     }
 
     ul {
@@ -38,102 +38,230 @@
     }
 
     ul li {
-      margin-bottom: 10px;
-      font-size: 16px;
+      margin-bottom: 8px;
     }
 
-    .button {
+    .btn {
       display: inline-block;
-      margin-top: 20px;
+      margin-top: 18px;
       padding: 14px 24px;
       background: #22c55e;
-      color: #000;
+      color: #064e3b;
       font-weight: bold;
-      border-radius: 12px;
+      border-radius: 14px;
       text-decoration: none;
     }
 
-    .button:hover {
-      opacity: 0.9;
+    input, textarea, select {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      border: none;
+      margin-bottom: 12px;
+      font-size: 14px;
+    }
+
+    textarea {
+      min-height: 100px;
+    }
+
+    .result {
+      background: rgba(255,255,255,0.15);
+      border-radius: 12px;
+      padding: 14px;
+      text-align: left;
+      white-space: pre-wrap;
+    }
+
+    hr {
+      border: none;
+      height: 1px;
+      background: rgba(255,255,255,0.2);
+      margin: 20px 0;
     }
   </style>
 </head>
 
 <body>
 
-  <!-- HERO -->
-  <div class="box">
-    <h1>🚀 Lakuin AI</h1>
-    <p>Konten jadi terus, fokus jualan</p>
+<!-- HERO -->
+<div class="box">
+  <h1>🚀 Lakuin AI</h1>
+  <p>Konten jadi terus, fokus jualan</p>
 
-    <ul>
-      <li>✅ Auto caption & hook</li>
-      <li>🔥 Konten cepat</li>
-      <li>💰 Cocok seller & affiliate</li>
-    </ul>
+  <ul>
+    <li>✅ Auto caption & hook jualan</li>
+    <li>🔥 Konten cepat tanpa mikir</li>
+    <li>💰 Cocok seller & affiliate</li>
+  </ul>
 
-    <a href="#harga" class="button">Mulai Sekarang</a>
+  <a href="#formAI" class="btn">Coba AI Sekarang</a>
+</div>
+
+<!-- MASALAH -->
+<div class="box">
+  <h2>Kenapa Banyak Jualan Sepi?</h2>
+  <p>
+    Produk bagus tapi konten lemah.<br><br>
+    Lakuin AI bantu kamu bikin caption,
+    hook, dan ide konten otomatis
+    tanpa ribet.
+  </p>
+</div>
+
+<!-- MANFAAT -->
+<div class="box">
+  <h2>Hasil yang Kamu Rasain</h2>
+  <ul>
+    <li>🚀 Konten siap posting tiap hari</li>
+    <li>📈 Peluang closing naik</li>
+    <li>🧠 Fokus jualan, bukan mikir caption</li>
+  </ul>
+</div>
+
+<!-- TOOLS -->
+<div class="box">
+  <h2>🛠️ Tools Lakuin AI</h2>
+  <ul>
+    <li>🧠 Auto caption jualan</li>
+    <li>🎣 Hook penarik pembeli</li>
+    <li>🎥 Ide konten harian</li>
+    <li>🛍️ Mode seller & affiliate</li>
+    <li>⚡ Cepat & praktis</li>
+  </ul>
+</div>
+
+<!-- FORM AI -->
+<div class="box" id="formAI">
+  <h2>🧠 Form AI Produk</h2>
+  <p>Isi produk → caption langsung jadi</p>
+
+  <input type="text" id="produk" placeholder="Nama Produk">
+  <textarea id="keunggulan" placeholder="Keunggulan utama produk"></textarea>
+
+  <select id="target">
+    <option value="ibu rumah tangga">Ibu rumah tangga</option>
+    <option value="anak muda">Anak muda</option>
+    <option value="seller online">Seller online</option>
+    <option value="affiliate">Affiliate</option>
+  </select>
+
+  <button class="btn" onclick="generateCaption()">✨ Buat Caption AI</button>
+
+  <hr>
+
+  <div id="hasil" class="result">
+    Hasil caption akan muncul di sini...
   </div>
+</div>
 
-  <!-- KENAPA -->
-  <div class="box">
-    <h2>Kenapa Lakuin AI?</h2>
-    <p>
-      Banyak produk bagus tapi sepi karena salah konten.<br><br>
-      Lakuin AI bantu bikin konten cepat, fokus jualan,
-      tanpa mikir ide tiap hari.
-    </p>
-  </div>
+<!-- PAKET -->
+<div class="box">
+  <h2>💸 Paket Lakuin AI</h2>
 
-  <!-- MANFAAT -->
-  <div class="box">
-    <h2>Hasil yang Kamu Rasain</h2>
-    <ul>
-      <li>🚀 Konten jadi terus</li>
-      <li>📈 Peluang closing naik</li>
-      <li>🧠 Fokus ke jualan</li>
-    </ul>
-  </div>
+  <h3>🔥 BASIC</h3>
+  <p><b>Rp 29.000 / bulan</b></p>
+  <ul>
+    <li>Auto caption jualan</li>
+    <li>Hook penarik pembeli</li>
+    <li>Ide konten harian</li>
+  </ul>
 
-  <!-- HARGA -->
-  <div class="box" id="harga">
-    <h2>Paket Lakuin AI</h2>
+  <hr>
 
-    <ul>
-      <li>🥉 <b>Basic</b><br>
-        Caption & hook otomatis<br>
-        <b>Rp49.000 / bulan</b>
-      </li>
+  <h3>🚀 PRO (Paling Laris)</h3>
+  <p><b>Rp 59.000 / bulan</b></p>
+  <ul>
+    <li>Semua fitur BASIC</li>
+    <li>Mode seller & affiliate</li>
+    <li>Caption fokus closing</li>
+    <li>Update fitur rutin</li>
+  </ul>
 
-      <li>🥈 <b>Pro (Paling Laris)</b><br>
-        Caption, hook, ide konten harian<br>
-        <b>Rp99.000 / bulan</b>
-      </li>
+  <a href="https://wa.me/6281394689311?text=Halo%20saya%20mau%20langganan%20Lakuin%20AI" class="btn">
+    🔥 Langganan via WhatsApp
+  </a>
 
-      <li>🥇 <b>Unlimited</b><br>
-        Semua fitur + prioritas support<br>
-        <b>Rp149.000 / bulan</b>
-      </li>
-    </ul>
+  <p style="margin-top:10px;font-size:14px;">
+    📞 WhatsApp: <b>0813-9468-9311</b>
+  </p>
+</div>
 
-    <a
-      href="https://wa.me/6281394689311?text=Halo%20saya%20mau%20order%20Lakuin%20AI"
-      class="button">
-      💬 Order via WhatsApp
-    </a>
-  </div>
+<script>
+function generateCaption() {
+  const produk = document.getElementById("produk").value;
+  const keunggulan = document.getElementById("keunggulan").value;
+  const target = document.getElementById("target").value;
 
-  <!-- CTA AKHIR -->
-  <div class="box">
-    <h2>Siap Bikin Konten Tanpa Ribet?</h2>
-    <p>Jangan tunggu besok. Konten = jualan.</p>
+  if (!produk || !keunggulan) {
+    alert("Isi produk dan keunggulan dulu ya");
+    return;
+  }
 
-    <a
-      href="https://wa.me/6281394689311?text=Halo%20saya%20siap%20pakai%20Lakuin%20AI"
-      class="button">
-      Mulai Sekarang
-    </a>
-  </div>
+  const caption =
+`🔥 ${produk} Lagi Banyak Dicari!
+
+Cocok buat ${target} yang mau hasil cepat.
+
+Kenapa wajib punya?
+✅ ${keunggulan}
+
+Gas sekarang sebelum kehabisan!
+Chat WA sekarang 👇`;
+
+  document.getElementById("hasil").innerText = caption;
+}
+</script>
 
 </body>
 </html>
+<div class="box">
+  <h2>🧠 Buat Caption Jualan Otomatis</h2>
+
+  <input id="produk" placeholder="Nama produk">
+  <input id="target" placeholder="Target pembeli (cewek / cowok / anak)">
+  <input id="unggulan" placeholder="Keunggulan utama produk">
+  <input id="harga" placeholder="Harga (contoh: 79.000)">
+
+  <button class="btn" onclick="buatCaption()">🚀 Buat Caption AI</button>
+
+  <textarea id="hasil" rows="7" placeholder="Caption akan muncul di sini..."></textarea>
+
+  <a id="kirimWA" class="btn" target="_blank" style="display:none;">
+    📲 Kirim ke WhatsApp
+  </a>
+</div>
+
+<script>
+function buatCaption() {
+  const produk = document.getElementById("produk").value.trim();
+  const target = document.getElementById("target").value.trim();
+  const unggulan = document.getElementById("unggulan").value.trim();
+  const harga = document.getElementById("harga").value.trim();
+
+  if (!produk || !target || !unggulan || !harga) {
+    alert("Lengkapi semua data dulu ya 👌");
+    return;
+  }
+
+  const caption =
+`🔥 ${produk} lagi banyak dicari!
+
+Cocok banget buat ${target} yang pengen ${unggulan}.
+Kualitas oke, harga ramah kantong.
+
+💰 Cuma Rp${harga}
+⚠️ Stok terbatas, siapa cepat dia dapat!
+
+👇 Chat sekarang sebelum kehabisan`;
+
+  document.getElementById("hasil").value = caption;
+
+  const waText = encodeURIComponent(caption);
+  const waLink = "https://wa.me/6281394689311?text=" + waText;
+
+  const btnWA = document.getElementById("kirimWA");
+  btnWA.href = waLink;
+  btnWA.style.display = "inline-block";
+}
+</script>
