@@ -2,194 +2,175 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Lakuin-AI Studio</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lakuin-AI Studio</title>
 
 <style>
-body{
-  margin:0;
-  font-family: Inter, Arial, sans-serif;
-  background:#0e1f1c;
-  color:#e8fff8;
-}
-.app{
-  display:grid;
-  grid-template-columns:260px 1fr;
-  height:100vh;
-}
-.sidebar{
-  background:#102a25;
-  padding:20px;
-}
-.sidebar h2{
-  margin:0 0 16px;
-}
+*{box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
+body{margin:0;background:#0b2a27;color:#eafffb}
+.container{display:flex;padding:20px;gap:20px}
+.sidebar{width:260px;background:#0f3a35;padding:15px;border-radius:14px}
+.main{flex:1;background:#0f3a35;padding:20px;border-radius:14px}
+
+h3{margin:0 0 10px}
+.section{margin-bottom:18px}
+
 .upload-box{
-  border:2px dashed #2bd8a3;
-  padding:20px;
-  text-align:center;
-  border-radius:12px;
-  margin-bottom:20px;
-}
-.upload-box input{
-  display:none;
-}
-.menu button{
-  width:100%;
-  margin:6px 0;
-  padding:10px;
-  background:#143a33;
-  color:#bfffe8;
-  border:none;
-  border-radius:8px;
-}
-.main{
-  padding:20px;
-  overflow:auto;
-}
-.card{
-  background:#12332d;
+  border:2px dashed #3de3c9;
+  padding:25px;
   border-radius:14px;
-  padding:16px;
-  margin-bottom:16px;
+  text-align:center;
+  cursor:pointer;
 }
-.row{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-}
-input, select{
+.upload-box input{display:none}
+
+.select,textarea{
   width:100%;
-  padding:10px;
-  border-radius:8px;
-  border:none;
-  background:#0f2622;
-  color:#fff;
-}
-.aspect{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:10px;
-}
-.aspect button{
   padding:12px;
-  background:#0f2622;
-  border:1px solid #2bd8a3;
-  color:#fff;
   border-radius:10px;
-}
-.generate{
-  margin-top:12px;
-  width:100%;
-  padding:14px;
-  background:#2bd8a3;
-  color:#003328;
-  font-weight:bold;
   border:none;
-  border-radius:12px;
-  font-size:16px;
+  background:#0b2a27;
+  color:#eafffb;
+  margin-top:6px;
 }
+
+.row{display:flex;gap:12px}
+.row > div{flex:1}
+
+.aspect button{
+  flex:1;
+  padding:14px;
+  border-radius:12px;
+  border:1px solid #2bdac0;
+  background:#0b2a27;
+  color:#eafffb;
+  cursor:pointer;
+}
+.aspect button.active{background:#2bdac0;color:#00352f}
+
+.generate{
+  margin-top:15px;
+  width:100%;
+  padding:16px;
+  border-radius:14px;
+  background:#2bdac0;
+  border:none;
+  font-weight:bold;
+  cursor:pointer;
+}
+
 .results{
   display:grid;
   grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
-  gap:16px;
-  margin-top:16px;
+  gap:15px;
+  margin-top:15px;
 }
 .results img{
   width:100%;
-  border-radius:14px;
-  box-shadow:0 10px 30px rgba(0,0,0,.4);
+  border-radius:12px;
+  object-fit:cover;
 }
 </style>
 </head>
 
 <body>
-<div class="app">
+<div class="container">
 
-  <!-- SIDEBAR -->
-  <div class="sidebar">
-    <h2>📸 Lakuin-AI Studio</h2>
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <h3>Upload Produk</h3>
+  <label class="upload-box">
+    Klik / Drop foto
+    <input type="file" id="productUpload" multiple accept="image/*">
+  </label>
+</div>
 
-    <div class="upload-box">
-      <label>
-        ⬆ Upload Produk
-        <input type="file">
-      </label>
-    </div>
+<!-- MAIN -->
+<div class="main">
 
-    <div class="menu">
-      <button>Fashion</button>
-      <button>Kosmetik</button>
-      <button>Makanan</button>
-      <button>Elektronik</button>
-    </div>
+<h3>Scene Settings</h3>
+
+<div class="section">
+  <select id="modelType" class="select">
+    <option>Wanita Non-Hijab</option>
+    <option>Wanita Berhijab</option>
+    <option>Pria</option>
+    <option>Anak Perempuan</option>
+    <option>Anak Laki-laki</option>
+    <option>Tanpa Model</option>
+  </select>
+</div>
+
+<div class="row section">
+  <div>
+    <label>Background</label>
+    <select id="background" class="select">
+      <option>Kamar Tidur</option>
+      <option>Studio Minimalis</option>
+      <option>Kafe Outdoor</option>
+      <option>Hotel Mewah</option>
+    </select>
   </div>
-
-  <!-- MAIN -->
-  <div class="main">
-
-    <!-- SCENE -->
-    <div class="card">
-      <h3>Scene Settings</h3>
-      <div class="row">
-        <select>
-          <option>AI Natural</option>
-          <option>Studio Clean</option>
-          <option>Hotel Room</option>
-        </select>
-        <select>
-          <option>Soft Light</option>
-          <option>Bright</option>
-          <option>Warm</option>
-        </select>
-      </div>
-    </div>
-
-    <!-- STYLING -->
-    <div class="card">
-      <h3>Styling & Control</h3>
-      <div class="row">
-        <input placeholder="Deskripsi Outfit">
-        <input placeholder="Pose / Angle">
-      </div>
-      <input style="margin-top:10px" placeholder="Custom Prompt (optional)">
-    </div>
-
-    <!-- ASPECT -->
-    <div class="card">
-      <h3>Aspect Ratio</h3>
-      <div class="aspect">
-        <button>1:1</button>
-        <button>4:5</button>
-        <button>9:16</button>
-        <button>16:9</button>
-      </div>
-
-      <button class="generate" onclick="generate()">✨ Generate Magic</button>
-    </div>
-
-    <!-- RESULTS -->
-    <div class="card">
-      <h3>Studio Results</h3>
-      <div class="results" id="results"></div>
-    </div>
-
+  <div>
+    <label>Vibes</label>
+    <select id="vibes" class="select">
+      <option>Aesthetic</option>
+      <option>Minimalis</option>
+      <option>Mewah</option>
+      <option>Cozy</option>
+    </select>
   </div>
 </div>
 
+<div class="section">
+  <label>Custom Prompt</label>
+  <textarea id="customPrompt" rows="2" placeholder="Detail tambahan..."></textarea>
+</div>
+
+<h3>Aspect Ratio</h3>
+<div class="row aspect">
+  <button class="active" onclick="setAspect(this)">9:16</button>
+  <button onclick="setAspect(this)">1:1</button>
+  <button onclick="setAspect(this)">3:4</button>
+  <button onclick="setAspect(this)">16:9</button>
+</div>
+
+<button class="generate" onclick="generate()">✨ GENERATE MAGIC</button>
+
+<h3 style="margin-top:20px">Studio Results</h3>
+<div class="results" id="results"></div>
+
+</div>
+</div>
+
 <script>
+let uploadedImages=[];
+
+document.getElementById('productUpload').addEventListener('change',function(e){
+  uploadedImages=[];
+  for(let file of e.target.files){
+    const reader=new FileReader();
+    reader.onload=ev=>uploadedImages.push(ev.target.result);
+    reader.readAsDataURL(file);
+  }
+});
+
+function setAspect(btn){
+  document.querySelectorAll('.aspect button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
 function generate(){
-  const results=document.getElementById("results");
-  results.innerHTML="";
-  const imgs=[
-    "https://picsum.photos/400/600?1",
-    "https://picsum.photos/400/600?2",
-    "https://picsum.photos/400/600?3",
-    "https://picsum.photos/400/600?4",
-    "https://picsum.photos/400/600?5"
-  ];
-  imgs.forEach(src=>{
-    const img=document.createElement("img");
+  const results=document.getElementById('results');
+  results.innerHTML='';
+
+  if(uploadedImages.length===0){
+    alert('Upload foto produk dulu');
+    return;
+  }
+
+  uploadedImages.forEach(src=>{
+    const img=document.createElement('img');
     img.src=src;
     results.appendChild(img);
   });
