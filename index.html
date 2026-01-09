@@ -2,412 +2,171 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
+<title>LocationSwap Studio</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lakuin AI</title>
-
 <style>
-body{
-  margin:0;
-  font-family:Arial, sans-serif;
-  background:linear-gradient(135deg,#16a34a,#22c55e);
-  color:#fff;
-  padding:30px 16px;
+body {
+  margin: 0;
+  font-family: Inter, Arial, sans-serif;
+  background: #0b1220;
+  color: #fff;
+}
+.container {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+}
+.card {
+  background: #121a2f;
+  border-radius: 14px;
+  padding: 20px;
+}
+.left { width: 30%; }
+.right { width: 70%; }
+
+h2 { margin-top: 0; font-size: 18px; }
+
+input, select, button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  border-radius: 10px;
+  border: none;
 }
 
-.box{
-  background:rgba(0,0,0,0.25);
-  border-radius:20px;
-  padding:28px;
-  max-width:420px;
-  margin:0 auto 26px;
+input, select {
+  background: #0f172a;
+  color: #fff;
 }
 
-h1,h2,h3{
-  margin-top:0;
+button {
+  background: linear-gradient(135deg,#22c55e,#16a34a);
+  color: #000;
+  font-weight: bold;
+  cursor: pointer;
 }
 
-ul{
-  padding:0;
-  list-style:none;
-  text-align:left;
+.progress {
+  margin-top: 20px;
+  background: #1e293b;
+  border-radius: 10px;
+  overflow: hidden;
+  display: none;
+}
+.progress-bar {
+  height: 12px;
+  width: 0%;
+  background: linear-gradient(90deg,#22c55e,#4ade80);
 }
 
-li{margin-bottom:8px}
-
-.btn{
-  display:inline-block;
-  margin-top:16px;
-  padding:14px 22px;
-  background:#22c55e;
-  color:#064e3b;
-  font-weight:bold;
-  border-radius:14px;
-  text-decoration:none;
-  border:none;
-  cursor:pointer;
+.output img {
+  width: 100%;
+  border-radius: 14px;
+  margin-top: 15px;
 }
 
-input,textarea{
-  width:100%;
-  padding:12px;
-  border-radius:10px;
-  border:none;
-  margin-bottom:10px;
+.blur {
+  filter: blur(10px);
 }
 
-textarea{resize:none}
-
-hr{
-  border:none;
-  height:1px;
-  background:rgba(255,255,255,.2);
-  margin:20px 0;
+.popup {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.7);
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+.popup-content {
+  background: #0f172a;
+  padding: 25px;
+  border-radius: 14px;
+  text-align: center;
+  width: 300px;
+}
+.popup-content a {
+  display: block;
+  margin-top: 15px;
+  padding: 12px;
+  background: #22c55e;
+  color: #000;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: bold;
 }
 </style>
 </head>
 
 <body>
 
-<!-- HERO -->
-<div class="box">
-<h1>🚀 Lakuin AI</h1>
-<p>Konten jadi terus, fokus jualan</p>
-<ul>
-<li>✅ Auto caption & hook</li>
-<li>🔥 Konten cepat</li>
-<li>💰 Cocok seller & affiliate</li>
-</ul>
-<a href="#tools" class="btn">Mulai Sekarang</a>
+<div class="container">
+  <div class="card left">
+    <h2>Upload Foto</h2>
+    <input type="file" id="photo">
+    <input placeholder="Lokasi tujuan (contoh: pantai Bali)">
+    <select>
+      <option>Sore (3–6 PM)</option>
+      <option>Pagi</option>
+      <option>Malam</option>
+    </select>
+    <select>
+      <option>Cerah</option>
+      <option>Berawan</option>
+      <option>Golden Hour</option>
+    </select>
+    <button onclick="generate()">GANTI LOKASI SEKARANG</button>
+
+    <div class="progress" id="progress">
+      <div class="progress-bar" id="bar"></div>
+    </div>
+  </div>
+
+  <div class="card right">
+    <h2>Hasil LocationSwap</h2>
+    <div class="output">
+      <img id="result" src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee" style="display:none">
+    </div>
+  </div>
 </div>
 
-<!-- KENAPA -->
-<div class="box">
-<h2>Kenapa Lakuin AI?</h2>
-<p>
-Banyak produk bagus tapi sepi karena salah konten.<br><br>
-Lakuin AI bantu bikin caption jualan otomatis tanpa mikir tiap hari.
-</p>
-</div>
-
-<!-- HASIL -->
-<div class="box">
-<h2>Hasil yang Kamu Rasain</h2>
-<ul>
-<li>🚀 Konten jadi terus</li>
-<li>📈 Peluang closing naik</li>
-<li>🧠 Fokus jualan</li>
-</ul>
-</div>
-
-<!-- TOOLS -->
-<div class="box" id="tools">
-<h2>🧠 Buat Caption Jualan Otomatis</h2>
-
-<input id="produk" placeholder="Nama produk">
-<input id="target" placeholder="Target pembeli (cewek / cowok / anak)">
-<input id="unggulan" placeholder="Keunggulan utama produk">
-<input id="harga" placeholder="Harga (contoh: 79.000)">
-
-<button class="btn" onclick="buatCaption()">🚀 Buat Caption AI</button>
-
-<textarea id="hasil" rows="6" placeholder="Caption akan muncul di sini..."></textarea>
-
-<a id="kirimWA" class="btn" target="_blank" style="display:none;">
-📲 Kirim ke WhatsApp
-</a>
-</div>
-
-<!-- PAKET -->
-<div class="box">
-<h2>💸 Paket Lakuin AI</h2>
-
-<h3>🥉 Basic</h3>
-<p><b>Rp49.000 / bulan</b></p>
-<ul>
-<li>Caption & hook otomatis</li>
-</ul>
-
-<hr>
-
-<h3>🥈 Pro (Paling Laris)</h3>
-<p><b>Rp99.000 / bulan</b></p>
-<ul>
-<li>Caption + hook</li>
-<li>Ide konten harian</li>
-</ul>
-
-<hr>
-
-<h3>🥇 Unlimited</h3>
-<p><b>Rp149.000 / bulan</b></p>
-<ul>
-<li>Semua fitur</li>
-<li>Tanpa limit</li>
-<li>Prioritas support</li>
-</ul>
-
-<a href="https://wa.me/6281394689311?text=Halo%20saya%20ingin%20langganan%20Lakuin%20AI" class="btn">
-💬 Order via WhatsApp
-</a>
+<div class="popup" id="popup">
+  <div class="popup-content">
+    <h3>Limit Gratis Habis</h3>
+    <p>Unlock hasil HD tanpa watermark</p>
+    <a href="https://gampang.app?ref=EGA-MU-6WD9HQ" target="_blank">
+      Upgrade Sekarang 🚀
+    </a>
+  </div>
 </div>
 
 <script>
-function buatCaption(){
-  let produk=document.getElementById("produk").value;
-  let target=document.getElementById("target").value;
-  let unggulan=document.getElementById("unggulan").value;
-  let harga=document.getElementById("harga").value;
+let used = 0;
 
-  if(!produk || !target || !unggulan || !harga){
-    alert("Lengkapi semua field dulu");
+function generate() {
+  if (used >= 1) {
+    document.getElementById("popup").style.display = "flex";
     return;
   }
 
-let caption=`🔥 ${produk} lagi banyak dicari!
+  used++;
 
-Cocok banget buat ${target} yang pengen ${unggulan}.
-Kualitas oke, harga ramah kantong.
+  document.getElementById("progress").style.display = "block";
+  let bar = document.getElementById("bar");
+  let width = 0;
 
-💰 Cuma Rp${harga}
-⚠️ Stok terbatas!
-
-👇 Chat sekarang sebelum kehabisan`;
-
-document.getElementById("hasil").value=caption;
-
-let waLink="https://wa.me/6281394689311?text="+encodeURIComponent(caption);
-let btnWA=document.getElementById("kirimWA");
-btnWA.href=waLink;
-btnWA.style.display="inline-block";
+  let interval = setInterval(() => {
+    width += 10;
+    bar.style.width = width + "%";
+    if (width >= 100) {
+      clearInterval(interval);
+      document.getElementById("progress").style.display = "none";
+      let img = document.getElementById("result");
+      img.style.display = "block";
+      img.classList.add("blur");
+    }
+  }, 300);
 }
 </script>
 
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="id">
-<head>
-<meta charset="UTF-8">
-<title>Login & Daftar</title>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-
-<style>
-body {
-  font-family: Arial;
-  background: #f4f4f4;
-}
-.box {
-  width: 320px;
-  margin: 80px auto;
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-}
-input {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
-}
-button {
-  width: 100%;
-  padding: 10px;
-  background: #4CAF50;
-  color: white;
-  border: none;
-  cursor: pointer;
-}
-button:hover {
-  background: #45a049;
-}
-small {
-  display: block;
-  text-align: center;
-  margin-top: 10px;
-}
-</style>
-</head>
-
-<body>
-
-<div class="box">
-  <h2>Login / Daftar</h2>
-
-  <input id="email" type="email" placeholder="Email">
-  <input id="password" type="password" placeholder="Password">
-
-  <button onclick="daftar()">Daftar</button>
-  <br><br>
-  <button onclick="login()">Login</button>
-
-  <small id="info"></small>
-</div>
-
-<script>
-// 🔥 GANTI CONFIG INI
-const firebaseConfig = {
-  apiKey: "API_KEY",
-  authDomain: "PROJECT_ID.firebaseapp.com",
-  projectId: "PROJECT_ID",
-  appId: "APP_ID"
-};
-
-// INIT FIREBASE
-firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-
-// DAFTAR
-function daftar() {
-  const email = email.value;
-  const password = password.value;
-
-  auth.createUserWithEmailAndPassword(email, password)
-    .then(() => {
-      info.innerText = "✅ Daftar berhasil, silakan login";
-    })
-    .catch(err => {
-      info.innerText = err.message;
-    });
-}
-
-// LOGIN
-function login() {
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
-
-  auth.signInWithEmailAndPassword(email, password)
-    .then(() => {
-      window.location.href = "dashboard.html"; // bisa diganti
-    })
-    .catch(err => {
-      info.innerText = err.message;
-    });
-}
-</script>
-
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8">
-  <title>Lakuin AI - Login</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <!-- Firebase CDN -->
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #0f172a;
-      color: white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-    .box {
-      background: #020617;
-      padding: 25px;
-      border-radius: 12px;
-      width: 100%;
-      max-width: 360px;
-    }
-    input, button {
-      width: 100%;
-      padding: 12px;
-      margin-top: 10px;
-      border-radius: 8px;
-      border: none;
-    }
-    button {
-      background: #22c55e;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    .link {
-      text-align: center;
-      margin-top: 12px;
-      cursor: pointer;
-      color: #38bdf8;
-    }
-  </style>
-</head>
-<body>
-
-<div class="box">
-  <h2 id="judul">Login Lakuin AI</h2>
-
-  <input type="email" id="email" placeholder="Email">
-  <input type="password" id="password" placeholder="Kata Sandi">
-
-  <button onclick="login()">LOGIN</button>
-  <button onclick="register()">DAFTAR</button>
-
-  <div class="link" onclick="logout()">Logout</div>
-  <p id="status"></p>
-</div>
-
-<script>
-  // 🔥 GANTI DENGAN CONFIG FIREBASE KAMU
-  const firebaseConfig = {
-    apiKey: "API_KEY_KAMU",
-    authDomain: "PROJECT.firebaseapp.com",
-    projectId: "PROJECT_ID",
-    appId: "APP_ID"
-  };
-
-  firebase.initializeApp(firebaseConfig);
-  const auth = firebase.auth();
-
-  function register() {
-    const email = email.value;
-    const password = password.value;
-
-    auth.createUserWithEmailAndPassword(email, password)
-      .then(() => {
-        status.innerText = "✅ Daftar berhasil!";
-      })
-      .catch(err => status.innerText = err.message);
-  }
-
-  function login() {
-    const email = email.value;
-    const password = password.value;
-
-    auth.signInWithEmailAndPassword(email, password)
-      .then(() => {
-        status.innerText = "✅ Login sukses!";
-      })
-      .catch(err => status.innerText = err.message);
-  }
-
-  function logout() {
-    auth.signOut();
-    status.innerText = "👋 Logout";
-  }
-
-  auth.onAuthStateChanged(user => {
-    if (user) {
-      status.innerText = "👤 Login sebagai: " + user.email;
-    }
-  });
-</script>
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.x.x/firebase-app.js";
-
-  const firebaseConfig = {
-    apiKey: "...",
-    authDomain: "...",
-    projectId: "...",
-    storageBucket: "...",
-    messagingSenderId: "...",
-    appId: "..."
-  };
-
-  const app = initializeApp(firebaseConfig);
-</script>
 </body>
 </html>
