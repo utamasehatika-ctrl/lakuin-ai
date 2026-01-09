@@ -47,7 +47,33 @@ h3{margin:0 0 10px}
   cursor:pointer;
 }
 .aspect button.active{background:#2bdac0;color:#00352f}
+<script>
+function generate(){
+  let sisa = cekLimit();
 
+  if (sisa <= 0) {
+    tampilUpgrade();
+    return;
+  }
+
+  pakaiLimit();
+
+  const results=document.getElementById('results');
+  results.innerHTML='';
+
+  const samples=[
+    'https://images.unsplash.com/photo-1520975916090-3105956dac38',
+    'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9',
+    'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c'
+  ];
+
+  samples.forEach(src=>{
+    const img=document.createElement('img');
+    img.src=src+'?auto=format&fit=crop&w=600&q=80';
+    results.appendChild(img);
+  });
+}
+</script>
 .generate{
   margin-top:15px;
   width:100%;
@@ -72,11 +98,72 @@ h3{margin:0 0 10px}
 }
 </style>
 </head>
+<div id="upgradePopup" style="
+display:none;
+position:fixed;
+top:0;left:0;
+width:100%;height:100%;
+background:rgba(0,0,0,0.8);
+z-index:9999;
+justify-content:center;
+align-items:center;
+">
 
+  <div style="
+  background:#0f3a35;
+  padding:25px;
+  border-radius:16px;
+  max-width:360px;
+  text-align:center;
+  color:#eafffb
+  ">
+    <h2>🔥 Limit Habis</h2>
+    <p>
+      Kamu sudah pakai limit gratis hari ini.<br><br>
+      Upgrade untuk:
+      <br>✅ Generate tanpa batas
+      <br>✅ Kualitas lebih tajam
+      <br>✅ Akses fitur premium
+    </p>
+
+    <a href="https://wa.me/6281394689311?text=Halo%20saya%20mau%20upgrade%20Lakuin-AI"
+       style="
+       display:block;
+       margin-top:15px;
+       padding:14px;
+       background:#2bdac0;
+       color:#00352f;
+       border-radius:12px;
+       text-decoration:none;
+       font-weight:bold;
+       ">
+      🚀 UPGRADE SEKARANG
+    </a>
+
+    <button onclick="tutupUpgrade()" style="
+      margin-top:10px;
+      background:none;
+      border:none;
+      color:#ccc;
+      cursor:pointer;
+    ">Nanti</button>
+  </div>
+</div>
+
+<script>
+function tampilUpgrade(){
+  document.getElementById("upgradePopup").style.display="flex";
+}
+function tutupUpgrade(){
+  document.getElementById("upgradePopup").style.display="none";
+}
+</script>
 <body>
+
 <div class="container">
 
 <!-- SIDEBAR -->
+  <span class="badge">FREE 3x / hari</span>
 <div class="sidebar">
   <h3>Upload Produk</h3>
   <label class="upload-box">
@@ -143,7 +230,31 @@ h3{margin:0 0 10px}
 </div>
 </div>
 
-<script>
+<script><script>
+const LIMIT_PER_DAY = 3;
+const STORAGE_KEY = "lakuin_limit";
+const DATE_KEY = "lakuin_date";
+
+function cekLimit() {
+  const today = new Date().toDateString();
+  const savedDate = localStorage.getItem(DATE_KEY);
+
+  if (savedDate !== today) {
+    localStorage.setItem(DATE_KEY, today);
+    localStorage.setItem(STORAGE_KEY, LIMIT_PER_DAY);
+  }
+
+  let sisa = parseInt(localStorage.getItem(STORAGE_KEY)) || 0;
+  return sisa;
+}
+
+function pakaiLimit() {
+  let sisa = cekLimit();
+  sisa--;
+  localStorage.setItem(STORAGE_KEY, sisa);
+  return sisa;
+}
+</script>
 let uploadedImages=[];
 
 document.getElementById('productUpload').addEventListener('change',function(e){
