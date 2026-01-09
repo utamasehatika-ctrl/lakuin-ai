@@ -184,3 +184,106 @@ btnWA.style.display="inline-block";
 
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Login & Daftar</title>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+
+<style>
+body {
+  font-family: Arial;
+  background: #f4f4f4;
+}
+.box {
+  width: 320px;
+  margin: 80px auto;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+}
+input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+button {
+  width: 100%;
+  padding: 10px;
+  background: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+button:hover {
+  background: #45a049;
+}
+small {
+  display: block;
+  text-align: center;
+  margin-top: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+  <h2>Login / Daftar</h2>
+
+  <input id="email" type="email" placeholder="Email">
+  <input id="password" type="password" placeholder="Password">
+
+  <button onclick="daftar()">Daftar</button>
+  <br><br>
+  <button onclick="login()">Login</button>
+
+  <small id="info"></small>
+</div>
+
+<script>
+// 🔥 GANTI CONFIG INI
+const firebaseConfig = {
+  apiKey: "API_KEY",
+  authDomain: "PROJECT_ID.firebaseapp.com",
+  projectId: "PROJECT_ID",
+  appId: "APP_ID"
+};
+
+// INIT FIREBASE
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+
+// DAFTAR
+function daftar() {
+  const email = email.value;
+  const password = password.value;
+
+  auth.createUserWithEmailAndPassword(email, password)
+    .then(() => {
+      info.innerText = "✅ Daftar berhasil, silakan login";
+    })
+    .catch(err => {
+      info.innerText = err.message;
+    });
+}
+
+// LOGIN
+function login() {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  auth.signInWithEmailAndPassword(email, password)
+    .then(() => {
+      window.location.href = "dashboard.html"; // bisa diganti
+    })
+    .catch(err => {
+      info.innerText = err.message;
+    });
+}
+</script>
+
+</body>
+</html>
