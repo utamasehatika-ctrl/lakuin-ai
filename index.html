@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lakuin AI Studio</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0b2a27;
+      color: white;
+    }
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 20px;
+    }
+    .box {
+      background: #103b37;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+    .upload {
+      border: 2px dashed #2dd4bf;
+      padding: 30px;
+      text-align: center;
+      border-radius: 12px;
+      cursor: pointer;
+    }
+    button {
+      background: #2dd4bf;
+      color: black;
+      border: none;
+      padding: 12px 18px;
+      border-radius: 10px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .results img {
+      width: 100%;
+      border-radius: 12px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h2>✨ Lakuin AI Studio (Demo)</h2>
+
+    <div class="box">
+      <label class="upload">
+        Upload Foto Produk
+        <input type="file" id="upload" accept="image/*" hidden>
+      </label>
+    </div>
+
+    <div class="box">
+      <select id="scene">
+        <option>Wanita Non-Hijab</option>
+        <option>Wanita Hijab</option>
+        <option>Pria</option>
+      </select>
+      <br><br>
+      <select id="bg">
+        <option>Kamar Tidur</option>
+        <option>Kafe</option>
+        <option>Studio</option>
+      </select>
+      <br><br>
+      <button onclick="generate()">✨ GENERATE (DEMO)</button>
+    </div>
+
+    <div class="box results" id="results"></div>
+  </div>
+
+  <script>
+    let imgData = null;
+
+    document.getElementById("upload").addEventListener("change", e => {
+      const reader = new FileReader();
+      reader.onload = ev => imgData = ev.target.result;
+      reader.readAsDataURL(e.target.files[0]);
+    });
+
+    function generate() {
+      if (!imgData) {
+        alert("Upload foto dulu");
+        return;
+      }
+      const results = document.getElementById("results");
+      results.innerHTML = "<p>✅ MODE DEMO AKTIF<br>(AI REAL MENYUSUL)</p>";
+      const img = document.createElement("img");
+      img.src = imgData;
+      results.appendChild(img);
+    }
+  </script>
+</body>
+</html>
