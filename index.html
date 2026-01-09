@@ -69,13 +69,13 @@ img{
     <input type="file" id="upload" accept="image/*">
   </label>
 
-  <select>
+  <select id="gender">
     <option>Wanita</option>
     <option>Pria</option>
     <option>Anak</option>
   </select>
 
-  <select>
+  <select id="scene">
     <option>Kamar</option>
     <option>Kafe</option>
     <option>Studio</option>
@@ -92,21 +92,45 @@ img{
 </div>
 
 <script>
-let imageData="";
+let imageData = "";
 
-document.getElementById("upload").addEventListener("change",e=>{
-  const reader=new FileReader();
-  reader.onload=ev=>imageData=ev.target.result;
+// ambil gambar
+document.getElementById("upload").addEventListener("change", e => {
+  const reader = new FileReader();
+  reader.onload = ev => imageData = ev.target.result;
   reader.readAsDataURL(e.target.files[0]);
 });
 
-function generate(){
+// generate
+async function generate(){
   if(!imageData){
     alert("Upload foto dulu");
     return;
   }
-  document.getElementById("resultImg").src=imageData;
-  document.getElementById("resultBox").style.display="block";
+
+  document.querySelector(".badge").innerText = "PROCESSING...";
+
+  try{
+    const res = await fetch("/api/generate", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        image: imageData,
+        gender: document.getElementById("gender").value,
+        scene: document.getElementById("scene").value
+      })
+    });
+
+    const data = await res.json();
+
+    document.getElementById("resultImg").src = data.result;
+    document.getElementById("resultBox").style.display = "block";
+    document.querySelector(".badge").innerText = "SELESAI";
+
+  }catch(err){
+    alert("Gagal generate");
+    document.querySelector(".badge").innerText = "MODE DEMO AKTIF";
+  }
 }
 </script>
 
