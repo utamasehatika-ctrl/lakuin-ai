@@ -175,7 +175,81 @@ function generate(){
     results.appendChild(img);
   });
 }
+</script><script>
+async function generate(){
+  const results = document.getElementById('results');
+  results.innerHTML = "⏳ Generating AI Image...";
+
+  const prompt = `
+  fashion photoshoot,
+  wanita non hijab,
+  outfit elegan,
+  background kamar hotel mewah,
+  cinematic lighting,
+  ultra realistic
+  `;
+
+  const res = await fetch("http://localhost:3000/generate", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      prompt: prompt,
+      aspect: "9:16"
+    })
+  });
+
+  const data = await res.json();
+
+  results.innerHTML = "";
+  if(data?.output){
+    data.output.forEach(img=>{
+      const image = document.createElement("img");
+      image.src = img;
+      results.appendChild(image);
+    });
+  }else{
+    results.innerHTML = "❌ Gagal generate";
+  }
+}
 </script>
 
 </body>
-</html>
+</html>import express from "express";
+import fetch from "node-fetch";
+import cors from "cors";
+
+const app = express();
+app.use(cors());
+app.use(express.json());
+
+const REPLICATE_API_KEY = "ISI_API_KEY_REPLICATE_KAMU";
+
+app.post("/generate", async (req, res) => {
+  const { prompt, aspect } = req.body;
+
+  try {
+    const response = await fetch("https://api.replicate.com/v1/predictions", {
+      method: "POST",
+      headers: {
+        "Authorization": `Token ${REPLICATE_API_KEY}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        version: "stability-ai/sdxl:latest",
+        input: {
+          prompt,
+          aspect_ratio: aspect
+        }
+      })
+    });
+
+    const data = await response.json();
+    res.json(data);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.listen(3000, () =>
+  console.log("🔥 AI Server running http://localhost:3000")
+);
