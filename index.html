@@ -115,7 +115,10 @@ button {
       <option>Golden Hour</option>
     </select>
     <button onclick="generate()">GANTI LOKASI SEKARANG</button>
-
+<div id="hasil" class="card" style="display:none">
+  <h4>Hasil AI</h4>
+  <p id="outputText"></p>
+</div>
     <div class="progress" id="progress">
       <div class="progress-bar" id="bar"></div>
     </div>
@@ -141,7 +144,28 @@ button {
 
 <script>
 let used = 0;
+let limit = localStorage.getItem("limit") || 0;
 
+const contohHasil = [
+  "🔥 Produk ini bikin tampilan makin kece dan premium",
+  "💡 Cocok buat kamu yang mau tampil beda tanpa ribet",
+  "✨ Desain simple tapi kelihatan mahal",
+  "🚀 Banyak dipakai seller laris di marketplace"
+];
+
+document.getElementById("generate").onclick = () => {
+  limit++;
+  localStorage.setItem("limit", limit);
+
+  if (limit > 2) {
+    document.getElementById("popup").style.display = "block";
+    return;
+  }
+
+  document.getElementById("hasil").style.display = "block";
+  document.getElementById("outputText").innerText = 
+    contohHasil[Math.floor(Math.random() * contohHasil.length)];
+};
 function generate() {
   if (used >= 1) {
     document.getElementById("popup").style.display = "flex";
