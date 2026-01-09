@@ -1,212 +1,200 @@
-<div class="grid">
-  <button class="cat active">Caption AI</button>
-  <button class="cat">Foto Produk AI</button>
-  <button class="cat">Video Affiliate AI</button>
-</div>
 <!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>LocationSwap Studio</title>
+<title>Lakuin-AI Studio</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
-body {
-  margin: 0;
+body{
+  margin:0;
   font-family: Inter, Arial, sans-serif;
-  background: #0b1220;
-  color: #fff;
+  background:#0e1f1c;
+  color:#e8fff8;
 }
-.container {
-  display: flex;
-  gap: 20px;
-  padding: 20px;
+.app{
+  display:grid;
+  grid-template-columns:260px 1fr;
+  height:100vh;
 }
-.card {
-  background: #121a2f;
-  border-radius: 14px;
-  padding: 20px;
+.sidebar{
+  background:#102a25;
+  padding:20px;
 }
-.left { width: 30%; }
-.right { width: 70%; }
-
-h2 { margin-top: 0; font-size: 18px; }
-
-input, select, button {
-  width: 100%;
-  padding: 12px;
-  margin-top: 10px;
-  border-radius: 10px;
-  border: none;
+.sidebar h2{
+  margin:0 0 16px;
 }
-
-input, select {
-  background: #0f172a;
-  color: #fff;
+.upload-box{
+  border:2px dashed #2bd8a3;
+  padding:20px;
+  text-align:center;
+  border-radius:12px;
+  margin-bottom:20px;
 }
-
-button {
-  background: linear-gradient(135deg,#22c55e,#16a34a);
-  color: #000;
-  font-weight: bold;
-  cursor: pointer;
+.upload-box input{
+  display:none;
 }
-
-.progress {
-  margin-top: 20px;
-  background: #1e293b;
-  border-radius: 10px;
-  overflow: hidden;
-  display: none;
+.menu button{
+  width:100%;
+  margin:6px 0;
+  padding:10px;
+  background:#143a33;
+  color:#bfffe8;
+  border:none;
+  border-radius:8px;
 }
-.progress-bar {
-  height: 12px;
-  width: 0%;
-  background: linear-gradient(90deg,#22c55e,#4ade80);
+.main{
+  padding:20px;
+  overflow:auto;
 }
-
-.output img {
-  width: 100%;
-  border-radius: 14px;
-  margin-top: 15px;
+.card{
+  background:#12332d;
+  border-radius:14px;
+  padding:16px;
+  margin-bottom:16px;
 }
-
-.blur {
-  filter: blur(10px);
+.row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
 }
-
-.popup {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,.7);
-  display: none;
-  align-items: center;
-  justify-content: center;
+input, select{
+  width:100%;
+  padding:10px;
+  border-radius:8px;
+  border:none;
+  background:#0f2622;
+  color:#fff;
 }
-.popup-content {
-  background: #0f172a;
-  padding: 25px;
-  border-radius: 14px;
-  text-align: center;
-  width: 300px;
+.aspect{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
 }
-.popup-content a {
-  display: block;
-  margin-top: 15px;
-  padding: 12px;
-  background: #22c55e;
-  color: #000;
-  border-radius: 10px;
-  text-decoration: none;
-  font-weight: bold;
+.aspect button{
+  padding:12px;
+  background:#0f2622;
+  border:1px solid #2bd8a3;
+  color:#fff;
+  border-radius:10px;
+}
+.generate{
+  margin-top:12px;
+  width:100%;
+  padding:14px;
+  background:#2bd8a3;
+  color:#003328;
+  font-weight:bold;
+  border:none;
+  border-radius:12px;
+  font-size:16px;
+}
+.results{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+  gap:16px;
+  margin-top:16px;
+}
+.results img{
+  width:100%;
+  border-radius:14px;
+  box-shadow:0 10px 30px rgba(0,0,0,.4);
 }
 </style>
 </head>
 
 <body>
+<div class="app">
 
-<div class="container">
-  <div class="card left">
-    <h2>Upload Foto</h2>
-    <input type="file" id="photo">
-    <input placeholder="Lokasi tujuan (contoh: pantai Bali)">
-    <select>
-      <option>Sore (3–6 PM)</option>
-      <option>Pagi</option>
-      <option>Malam</option>
-    </select>
-    <select>
-      <option>Cerah</option>
-      <option>Berawan</option>
-      <option>Golden Hour</option>
-    </select>
-    <button onclick="generate()">GANTI LOKASI SEKARANG</button>
-<div id="hasil" class="card" style="display:none">
-  <h4>Hasil AI</h4>
-  <p id="outputText"></p>
-</div>
-    <div class="progress" id="progress">
-      <div class="progress-bar" id="bar"></div>
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <h2>📸 Lakuin-AI Studio</h2>
+
+    <div class="upload-box">
+      <label>
+        ⬆ Upload Produk
+        <input type="file">
+      </label>
+    </div>
+
+    <div class="menu">
+      <button>Fashion</button>
+      <button>Kosmetik</button>
+      <button>Makanan</button>
+      <button>Elektronik</button>
     </div>
   </div>
 
-  <div class="card right">
-    <h2>Hasil LocationSwap</h2>
-    <div class="output">
-      <img id="result" src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee" style="display:none">
-    </div>
-  </div>
-</div>
+  <!-- MAIN -->
+  <div class="main">
 
-<div class="popup" id="popup">
-  <div class="popup-content">
-    <h3>Limit Gratis Habis</h3>
-    <p>Unlock hasil HD tanpa watermark</p>
-    <a href="https://gampang.app?ref=EGA-MU-6WD9HQ" target="_blank">
-      Upgrade Sekarang 🚀
-    </a>
+    <!-- SCENE -->
+    <div class="card">
+      <h3>Scene Settings</h3>
+      <div class="row">
+        <select>
+          <option>AI Natural</option>
+          <option>Studio Clean</option>
+          <option>Hotel Room</option>
+        </select>
+        <select>
+          <option>Soft Light</option>
+          <option>Bright</option>
+          <option>Warm</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- STYLING -->
+    <div class="card">
+      <h3>Styling & Control</h3>
+      <div class="row">
+        <input placeholder="Deskripsi Outfit">
+        <input placeholder="Pose / Angle">
+      </div>
+      <input style="margin-top:10px" placeholder="Custom Prompt (optional)">
+    </div>
+
+    <!-- ASPECT -->
+    <div class="card">
+      <h3>Aspect Ratio</h3>
+      <div class="aspect">
+        <button>1:1</button>
+        <button>4:5</button>
+        <button>9:16</button>
+        <button>16:9</button>
+      </div>
+
+      <button class="generate" onclick="generate()">✨ Generate Magic</button>
+    </div>
+
+    <!-- RESULTS -->
+    <div class="card">
+      <h3>Studio Results</h3>
+      <div class="results" id="results"></div>
+    </div>
+
   </div>
 </div>
 
 <script>
-let used = 0;
-let limit = localStorage.getItem("limit") || 0;
-
-const contohHasil = [
-  "🔥 Produk ini bikin tampilan makin kece dan premium",
-  "💡 Cocok buat kamu yang mau tampil beda tanpa ribet",
-  "✨ Desain simple tapi kelihatan mahal",
-  "🚀 Banyak dipakai seller laris di marketplace"
-];
-
-document.getElementById("generate").onclick = () => {
-  limit++;
-  localStorage.setItem("limit", limit);
-
-  if (limit > 2) {
-    document.getElementById("popup").style.display = "block";
-    return;
-  }
-
-  document.getElementById("hasil").style.display = "block";
-  document.getElementById("outputText").innerText = 
-    contohHasil[Math.floor(Math.random() * contohHasil.length)];
-};
-function generate() {
-  if (used >= 1) {
-    document.getElementById("popup").style.display = "flex";
-    return;
-  }
-
-  used++;
-
-  document.getElementById("progress").style.display = "block";
-  let bar = document.getElementById("bar");
-  let width = 0;
-
-  let interval = setInterval(() => {
-    width += 10;
-    bar.style.width = width + "%";
-    if (width >= 100) {
-      clearInterval(interval);
-      document.getElementById("progress").style.display = "none";
-      let img = document.getElementById("result");
-      img.style.display = "block";
-      img.classList.add("blur");
-    }
-  }, 300);
+function generate(){
+  const results=document.getElementById("results");
+  results.innerHTML="";
+  const imgs=[
+    "https://picsum.photos/400/600?1",
+    "https://picsum.photos/400/600?2",
+    "https://picsum.photos/400/600?3",
+    "https://picsum.photos/400/600?4",
+    "https://picsum.photos/400/600?5"
+  ];
+  imgs.forEach(src=>{
+    const img=document.createElement("img");
+    img.src=src;
+    results.appendChild(img);
+  });
 }
 </script>
 
 </body>
-</html><div class="card">
-  <h3>Kenapa Pakai Lakuin-AI?</h3>
-  <ul>
-    <li>✅ Konten siap jual</li>
-    <li>✅ Hemat waktu & ide</li>
-    <li>✅ Cocok affiliate & seller</li>
-  </ul>
-
-  <a href="https://gampang.app?ref=EGA-MU-6WD9HQ">
-    <button>🔥 Upgrade Versi PRO</button>
-  </a>
-</div>
+</html>
