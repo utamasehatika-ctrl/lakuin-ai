@@ -1,102 +1,114 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Lakuin AI Studio</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lakuin AI Studio (Demo)</title>
 
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #0b2a27;
-      color: white;
-    }
-    .container {
-      max-width: 900px;
-      margin: auto;
-      padding: 20px;
-    }
-    .box {
-      background: #103b37;
-      border-radius: 12px;
-      padding: 16px;
-      margin-bottom: 16px;
-    }
-    .upload {
-      border: 2px dashed #2dd4bf;
-      padding: 30px;
-      text-align: center;
-      border-radius: 12px;
-      cursor: pointer;
-    }
-    button {
-      background: #2dd4bf;
-      color: black;
-      border: none;
-      padding: 12px 18px;
-      border-radius: 10px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    .results img {
-      width: 100%;
-      border-radius: 12px;
-      margin-top: 10px;
-    }
-  </style>
+<style>
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#0b2a27;
+  color:#eafffb;
+}
+.container{
+  max-width:420px;
+  margin:auto;
+  padding:16px;
+}
+.card{
+  background:#0f3a35;
+  padding:16px;
+  border-radius:16px;
+  margin-bottom:16px;
+}
+.upload{
+  border:2px dashed #3de3c9;
+  padding:20px;
+  border-radius:14px;
+  text-align:center;
+  cursor:pointer;
+}
+.upload input{display:none}
+select,button{
+  width:100%;
+  padding:12px;
+  margin-top:10px;
+  border-radius:12px;
+  border:none;
+}
+button{
+  background:#2bdac0;
+  font-weight:bold;
+}
+img{
+  width:100%;
+  border-radius:14px;
+  margin-top:10px;
+}
+.badge{
+  background:#ffc107;
+  color:#000;
+  padding:6px 10px;
+  border-radius:10px;
+  display:inline-block;
+  margin-bottom:10px;
+}
+</style>
 </head>
 
 <body>
-  <div class="container">
-    <h2>✨ Lakuin AI Studio (Demo)</h2>
+<div class="container">
 
-    <div class="box">
-      <label class="upload">
-        Upload Foto Produk
-        <input type="file" id="upload" accept="image/*" hidden>
-      </label>
-    </div>
+<h2>✨ Lakuin AI Studio (Demo)</h2>
 
-    <div class="box">
-      <select id="scene">
-        <option>Wanita Non-Hijab</option>
-        <option>Wanita Hijab</option>
-        <option>Pria</option>
-      </select>
-      <br><br>
-      <select id="bg">
-        <option>Kamar Tidur</option>
-        <option>Kafe</option>
-        <option>Studio</option>
-      </select>
-      <br><br>
-      <button onclick="generate()">✨ GENERATE (DEMO)</button>
-    </div>
+<div class="card">
+  <label class="upload">
+    Upload Foto Produk
+    <input type="file" id="upload" accept="image/*">
+  </label>
 
-    <div class="box results" id="results"></div>
-  </div>
+  <select>
+    <option>Wanita</option>
+    <option>Pria</option>
+    <option>Anak</option>
+  </select>
 
-  <script>
-    let imgData = null;
+  <select>
+    <option>Kamar</option>
+    <option>Kafe</option>
+    <option>Studio</option>
+  </select>
 
-    document.getElementById("upload").addEventListener("change", e => {
-      const reader = new FileReader();
-      reader.onload = ev => imgData = ev.target.result;
-      reader.readAsDataURL(e.target.files[0]);
-    });
+  <button onclick="generate()">✨ GENERATE (DEMO)</button>
+</div>
 
-    function generate() {
-      if (!imgData) {
-        alert("Upload foto dulu");
-        return;
-      }
-      const results = document.getElementById("results");
-      results.innerHTML = "<p>✅ MODE DEMO AKTIF<br>(AI REAL MENYUSUL)</p>";
-      const img = document.createElement("img");
-      img.src = imgData;
-      results.appendChild(img);
-    }
-  </script>
+<div class="card" id="resultBox" style="display:none">
+  <span class="badge">MODE DEMO AKTIF</span>
+  <img id="resultImg">
+</div>
+
+</div>
+
+<script>
+let imageData="";
+
+document.getElementById("upload").addEventListener("change",e=>{
+  const reader=new FileReader();
+  reader.onload=ev=>imageData=ev.target.result;
+  reader.readAsDataURL(e.target.files[0]);
+});
+
+function generate(){
+  if(!imageData){
+    alert("Upload foto dulu");
+    return;
+  }
+  document.getElementById("resultImg").src=imageData;
+  document.getElementById("resultBox").style.display="block";
+}
+</script>
+
 </body>
 </html>
