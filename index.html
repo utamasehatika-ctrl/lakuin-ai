@@ -287,3 +287,114 @@ function login() {
 
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Lakuin AI - Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Firebase CDN -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #0f172a;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .box {
+      background: #020617;
+      padding: 25px;
+      border-radius: 12px;
+      width: 100%;
+      max-width: 360px;
+    }
+    input, button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      border-radius: 8px;
+      border: none;
+    }
+    button {
+      background: #22c55e;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .link {
+      text-align: center;
+      margin-top: 12px;
+      cursor: pointer;
+      color: #38bdf8;
+    }
+  </style>
+</head>
+<body>
+
+<div class="box">
+  <h2 id="judul">Login Lakuin AI</h2>
+
+  <input type="email" id="email" placeholder="Email">
+  <input type="password" id="password" placeholder="Kata Sandi">
+
+  <button onclick="login()">LOGIN</button>
+  <button onclick="register()">DAFTAR</button>
+
+  <div class="link" onclick="logout()">Logout</div>
+  <p id="status"></p>
+</div>
+
+<script>
+  // 🔥 GANTI DENGAN CONFIG FIREBASE KAMU
+  const firebaseConfig = {
+    apiKey: "API_KEY_KAMU",
+    authDomain: "PROJECT.firebaseapp.com",
+    projectId: "PROJECT_ID",
+    appId: "APP_ID"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+
+  function register() {
+    const email = email.value;
+    const password = password.value;
+
+    auth.createUserWithEmailAndPassword(email, password)
+      .then(() => {
+        status.innerText = "✅ Daftar berhasil!";
+      })
+      .catch(err => status.innerText = err.message);
+  }
+
+  function login() {
+    const email = email.value;
+    const password = password.value;
+
+    auth.signInWithEmailAndPassword(email, password)
+      .then(() => {
+        status.innerText = "✅ Login sukses!";
+      })
+      .catch(err => status.innerText = err.message);
+  }
+
+  function logout() {
+    auth.signOut();
+    status.innerText = "👋 Logout";
+  }
+
+  auth.onAuthStateChanged(user => {
+    if (user) {
+      status.innerText = "👤 Login sebagai: " + user.email;
+    }
+  });
+</script>
+
+</body>
+</html>
