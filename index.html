@@ -133,6 +133,44 @@ async function generate(){
   }
 }
 </script>
+<script>
+let imageData = "";
 
+document.getElementById("upload").addEventListener("change", e => {
+  const reader = new FileReader();
+  reader.onload = ev => imageData = ev.target.result;
+  reader.readAsDataURL(e.target.files[0]);
+});
+
+async function generate(){
+  if(!imageData){
+    alert("Upload foto dulu");
+    return;
+  }
+
+  document.querySelector(".badge").innerText = "PROCESSING AI...";
+  document.getElementById("resultBox").style.display = "block";
+
+  try {
+    const res = await fetch("/api/generate", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ image: imageData })
+    });
+
+    const data = await res.json();
+
+    if(data.error){
+      alert(data.error);
+      return;
+    }
+
+    document.getElementById("resultImg").src = data.result;
+    document.querySelector(".badge").innerText = "AI REAL AKTIF";
+  } catch (err) {
+    alert("Gagal konek ke AI");
+  }
+}
+</script>
 </body>
 </html>
