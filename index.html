@@ -2,41 +2,113 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Lakuin – Auto Skrip Jualan</title>
+<title>Lakuin AI – Auto Skrip Jualan</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
-body{font-family:Arial;background:#0b2a27;color:#eafffb;padding:20px}
-textarea,button{width:100%;padding:12px;margin-top:10px;border-radius:10px;border:none}
-button{background:#2bdac0;font-weight:bold}
-.box{background:#0f3a35;padding:15px;border-radius:14px;margin-top:15px}
+body{
+  font-family: Arial, sans-serif;
+  background:#0f3a35;
+  color:#fff;
+  padding:20px;
+}
+.box{
+  background:#144b45;
+  padding:16px;
+  border-radius:12px;
+  max-width:600px;
+  margin:auto;
+}
+h1{font-size:20px;text-align:center}
+select,textarea,button{
+  width:100%;
+  margin-top:10px;
+  padding:10px;
+  border-radius:8px;
+  border:none;
+  font-size:14px;
+}
+button{
+  background:#2bdac0;
+  font-weight:bold;
+  cursor:pointer;
+}
+.output{
+  background:#0b2d29;
+  padding:12px;
+  border-radius:8px;
+  margin-top:12px;
+  white-space:pre-wrap;
+}
 </style>
 </head>
+
 <body>
 
-<h2>🔥 Auto Skrip Jualan</h2>
+<div class="box">
+<h1>🔥 Auto Skrip Jualan</h1>
 
-<textarea id="produk" placeholder="Nama produk..."></textarea>
+<textarea id="produk" placeholder="Masukin nama produk..."></textarea>
 
-<button onclick="generate()">BUATKAN SKRIP 🔥</button>
+<select id="model">
+  <option>Wanita Berhijab</option>
+  <option>Wanita Non Hijab</option>
+  <option>Pria</option>
+  <option>Anak Perempuan</option>
+  <option>Tanpa Model (Produk Saja)</option>
+</select>
 
-<div class="box" id="hasil"></div>
+<select id="vibes">
+  <option>Japanese Zen</option>
+  <option>Scandinavian Minimalis</option>
+  <option>Luxury</option>
+  <option>Industrial</option>
+</select>
+
+<select id="angle">
+  <option>Eye Level</option>
+  <option>Close Up</option>
+  <option>Medium Shot</option>
+</select>
+
+<select id="ratio">
+  <option>9:16 (Reels / TikTok)</option>
+  <option>1:1 (Instagram)</option>
+</select>
+
+<button onclick="generate()">🚀 BUATIN SKRIP</button>
+
+<div class="output" id="hasil"></div>
+</div>
 
 <script>
 function generate(){
-  const p=document.getElementById("produk").value;
-  document.getElementById("hasil").innerHTML=
-`HOOK:
-INI BUKAN ${p} BIASA ❌
+  const produk = document.getElementById("produk").value;
+  const model = document.getElementById("model").value;
+  const vibes = document.getElementById("vibes").value;
+  const angle = document.getElementById("angle").value;
+  const ratio = document.getElementById("ratio").value;
 
-TEKS VIDEO:
-Dipake enak
-Bahan beda
-Harga masuk akal
+  const text = `
+🔥 HOOK:
+❌ Ini BUKAN ${produk} kaleng-kaleng
 
-CAPTION:
-${p} ini ga kaleng-kaleng 🔥
-Yang cepet dapet.
+🎬 SCRIPT:
+Nih gua tunjukin ${produk} yang lagi rame.
+Pake model ${model}, vibes ${vibes}.
+Kelihatan mahal, rapi, tapi harganya masuk akal.
 
-#fyp #jualanonline`;
+👉 CTA:
+Klik keranjang kuning sekarang.
+Stok cepet abis, jangan nyesel belakangan!
+
+🎥 PROMPT AI VIDEO:
+${angle} shot, ${model} holding ${produk},
+${vibes} style, clean background,
+high quality, ${ratio}, cinematic lighting.
+`;
+
+  document.getElementById("hasil").innerText = text;
 }
 </script>
 
