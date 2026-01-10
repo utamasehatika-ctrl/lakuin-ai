@@ -2,154 +2,176 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Auto Visual Produk AI</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lakuin AI – Level 5</title>
+
 <style>
-body {
-  font-family: Arial, sans-serif;
-  background:#0f2e2a;
-  color:#fff;
-  padding:20px;
+:root{
+--bg:#0f2e2a;
+--box:#133b36;
+--text:#fff;
+--btn:#1dd1a1;
 }
-h2 { margin-top:30px; }
-select, button, textarea {
-  width:100%;
-  padding:10px;
-  margin-top:10px;
-  border-radius:6px;
-  border:none;
+.light{
+--bg:#f5f5f5;
+--box:#ffffff;
+--text:#111;
 }
-button {
-  background:#1dd1a1;
-  color:#000;
-  font-weight:bold;
-  cursor:pointer;
+body{
+font-family:Arial,sans-serif;
+background:var(--bg);
+color:var(--text);
+padding:16px;
 }
-textarea {
-  height:180px;
+.container{
+max-width:800px;
+margin:auto;
+background:var(--box);
+padding:20px;
+border-radius:14px;
 }
-.container {
-  max-width:600px;
-  margin:auto;
-  background:#133b36;
-  padding:20px;
-  border-radius:10px;
+select,button,textarea,input{
+width:100%;
+padding:12px;
+margin-top:10px;
+border-radius:10px;
+border:none;
 }
+button{background:var(--btn);font-weight:bold;cursor:pointer}
+.secondary{background:#54a0ff;color:#fff}
+.warn{background:#feca57}
+textarea{min-height:150px}
+h2{margin-top:24px}
+.small{font-size:13px;opacity:.8}
 </style>
 </head>
 
 <body>
 <div class="container">
-<h1>🔥 Auto Visual Produk AI</h1>
 
-<h2>1️⃣ Kategori Produk</h2>
-<select id="kategori">
-  <option>Furniture</option>
-  <option>Fashion</option>
-  <option>Kosmetik</option>
-  <option>F&B</option>
-  <option>Elektronik</option>
-  <option>Otomotif</option>
-  <option>Lainnya</option>
+<h1>🔥 Lakuin AI – LEVEL 5</h1>
+<p class="small">Auto Produk • Template Viral • Hook Maksa</p>
+
+<h2>1️⃣ Nama Produk</h2>
+<input id="produk" placeholder="Contoh: Jaket Anak Premium"/>
+
+<h2>2️⃣ Preset Cepat</h2>
+<select id="preset">
+<option>Jaket</option>
+<option>Hijab</option>
+<option>Furniture</option>
+<option>Skincare</option>
+<option>Produk Anak</option>
 </select>
 
-<h2>2️⃣ Latar Scene</h2>
+<h2>3️⃣ Scene & Gaya</h2>
 <select id="scene">
-  <option>Ruang Tamu Modern</option>
-  <option>Kamar Tidur Minimalis</option>
-  <option>Apartemen Studio</option>
-  <option>Showroom Furniture</option>
-  <option>Penthouse Mewah</option>
+<option>Studio Minimal</option>
+<option>Showroom Mewah</option>
+<option>Kamar Estetik</option>
 </select>
 
-<h2>3️⃣ Vibes</h2>
 <select id="vibes">
-  <option>Scandinavian Minimalis</option>
-  <option>Industrial Modern</option>
-  <option>Japanese Zen</option>
-  <option>Contemporary Luxury</option>
+<option>Clean Aesthetic</option>
+<option>Luxury Modern</option>
+<option>Soft Natural</option>
 </select>
 
-<h2>4️⃣ Angle Kamera</h2>
-<select id="angle">
-  <option>Three-Quarter View</option>
-  <option>Close Up</option>
-  <option>Wide Shot</option>
-  <option>Dutch Angle (Artistik)</option>
-</select>
+<h2>4️⃣ Custom Prompt (Opsional)</h2>
+<textarea id="custom" placeholder="Contoh: jaket posisi tidur, fokus tekstur kain, lighting lembut..."></textarea>
 
-<h2>5️⃣ Model</h2>
-<select id="model">
-  <option>Wanita Berhijab</option>
-  <option>Wanita Non Hijab</option>
-  <option>Pria</option>
-  <option>Tanpa Model</option>
-</select>
+<h2>🔥 GENERATOR</h2>
+<button onclick="foto()">📸 FOTO AI</button>
+<button class="secondary" onclick="video()">🎥 VIDEO AI</button>
+<button class="warn" onclick="hook()">💣 HOOK MAKSA</button>
+<button onclick="caption()">🛒 CAPTION JUALAN</button>
 
-<h2>6️⃣ Aspect Ratio</h2>
-<select id="ratio">
-  <option>9:16</option>
-  <option>1:1</option>
-  <option>3:4</option>
-</select>
-
-<button onclick="generate()">🚀 GENERATE PROMPT</button>
-
-<h2>🔥 Prompt AI (Siap Copas)</h2>
+<h2>HASIL (SIAP COPAS)</h2>
 <textarea id="output"></textarea>
 
-<button onclick="copyText()">📋 COPY PROMPT</button>
+<button onclick="copy()">📋 COPY</button>
+<button class="secondary" onclick="toggle()">🌗 DARK / LIGHT</button>
+
 </div>
 
 <script>
-function generate() {
-  const kategori = kategoriMap(document.getElementById("kategori").value);
-  const scene = document.getElementById("scene").value;
-  const vibes = document.getElementById("vibes").value;
-  const angle = document.getElementById("angle").value;
-  const model = modelMap(document.getElementById("model").value);
-  const ratio = document.getElementById("ratio").value;
+function foto(){
+output.value=
+`PHOTO PROMPT:
+Ultra realistic product photo of ${produk.value},
+${preset.value} category,
+placed in ${scene.value},
+${vibes.value} style,
+commercial lighting,
+clean background,
+high detail, sharp focus.
+${custom.value}`;
+save();
+}
 
-  const prompt = `
-A realistic ${kategori} product photo,
-placed in a ${scene},
-${vibes} interior style,
-soft natural daylight,
-${model},
-camera angle: ${angle},
-professional commercial photography,
-high detail, ultra realistic,
-clean background, soft shadow,
-perfect for e-commerce and social media,
-vertical composition, aspect ratio ${ratio},
-high resolution, cinematic lighting
+function video(){
+output.value=
+`VIDEO PROMPT (Runway / Pika):
+Cinematic product showcase video of ${produk.value},
+slow smooth camera movement,
+${scene.value} environment,
+${vibes.value} mood,
+professional advertisement style,
+vertical video.
+${custom.value}`;
+save();
+}
+
+function hook(){
+output.value=
+`HOOK VISUAL:
+Close-up ${produk.value}, lighting dramatis.
+Kamera pelan masuk ke detail utama.
+
+HOOK AUDIO:
+"Stop scroll.
+Ini bukan ${preset.value.toLowerCase()} biasa."
+
+HOOK TEKS:
+YANG TAU KUALITAS,
+LANGSUNG GAS.
 `;
-
-  document.getElementById("output").value = prompt.trim();
+save();
 }
 
-function kategoriMap(val){
-  if(val==="Furniture") return "furniture";
-  if(val==="Fashion") return "fashion";
-  if(val==="Kosmetik") return "cosmetic";
-  if(val==="F&B") return "food product";
-  if(val==="Elektronik") return "electronic";
-  if(val==="Otomotif") return "automotive";
-  return "product";
+function caption(){
+output.value=
+`${produk.value} lagi rame banget.
+Model simpel tapi keliatan mahal.
+Dipake harian aman, foto estetik dapet.
+
+🔥 Stok terbatas
+🛒 Klik keranjang sekarang
+
+#fyp #produkviral #jualanonline #cuan`;
+save();
 }
 
-function modelMap(val){
-  if(val==="Wanita Berhijab") return "a hijab-wearing woman beside the product";
-  if(val==="Wanita Non Hijab") return "a female model beside the product";
-  if(val==="Pria") return "a male model beside the product";
-  return "no human model, product only";
+function save(){
+localStorage.setItem("lvl5",output.value);
 }
 
-function copyText(){
-  const text = document.getElementById("output");
-  text.select();
-  document.execCommand("copy");
-  alert("Prompt berhasil di-copy!");
+function copy(){
+output.select();
+document.execCommand("copy");
+alert("SIAP JUALAN 🔥");
+}
+
+function toggle(){
+document.body.classList.toggle("light");
+}
+
+window.onload=()=>{
+if(localStorage.getItem("lvl5")){
+output.value=localStorage.getItem("lvl5");
+}
 }
 </script>
+
 </body>
 </html>
