@@ -95,8 +95,17 @@ h2{margin-top:24px}
 </div>
 
 <script>
+// 🔧 WAJIB: deklarasi element (FIX UTAMA)
+const produk = document.getElementById("produk");
+const preset = document.getElementById("preset");
+const scene = document.getElementById("scene");
+const vibes = document.getElementById("vibes");
+const custom = document.getElementById("custom");
+const output = document.getElementById("output");
+
+// 🔥 GENERATOR
 function foto(){
-output.value=
+output.value =
 `PHOTO PROMPT:
 Ultra realistic product photo of ${produk.value},
 ${preset.value} category,
@@ -110,7 +119,7 @@ save();
 }
 
 function video(){
-output.value=
+output.value =
 `VIDEO PROMPT (Runway / Pika):
 Cinematic product showcase video of ${produk.value},
 slow smooth camera movement,
@@ -123,7 +132,7 @@ save();
 }
 
 function hook(){
-output.value=
+output.value =
 `HOOK VISUAL:
 Close-up ${produk.value}, lighting dramatis.
 Kamera pelan masuk ke detail utama.
@@ -140,7 +149,7 @@ save();
 }
 
 function caption(){
-output.value=
+output.value =
 `${produk.value} lagi rame banget.
 Model simpel tapi keliatan mahal.
 Dipake harian aman, foto estetik dapet.
@@ -152,8 +161,9 @@ Dipake harian aman, foto estetik dapet.
 save();
 }
 
+// 💾 SAVE & UTIL
 function save(){
-localStorage.setItem("lvl5",output.value);
+localStorage.setItem("lvl5", output.value);
 }
 
 function copy(){
@@ -166,11 +176,11 @@ function toggle(){
 document.body.classList.toggle("light");
 }
 
-window.onload=()=>{
+window.onload = () => {
 if(localStorage.getItem("lvl5")){
-output.value=localStorage.getItem("lvl5");
+output.value = localStorage.getItem("lvl5");
 }
-}
+};
 </script>
 
 </body>
