@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cuan Creator ULTRA</title>
+<title>Cuan Creator</title>
 
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#022c22">
@@ -210,6 +210,11 @@ a.click();
    SAFETY GENERATE LIMIT (3000)
    TANPA MERUSAK FILE LEVEL 19–20
 ================================ */
+<script>
+/* =====================================
+   SAFE BATCH GENERATOR
+   ANTI FREEZE • LEVEL 19–20 AMAN
+===================================== */
 
 (function () {
   if (typeof window.generate !== "function") return;
@@ -218,21 +223,35 @@ a.click();
 
   window.generate = function () {
     const input = document.querySelector('[name="jumlah"], #jumlah, .jumlah-generate');
-    let value = input ? parseInt(input.value || 0) : 0;
+    let total = input ? parseInt(input.value || 0) : 0;
 
-    if (value > 3000) {
-      alert(
-        "⚠️ Demi keamanan sistem & browser,\n" +
-        "jumlah generate dibatasi maksimal 3000.\n\n" +
-        "Permintaan kamu: " + value + "\n" +
-        "Diproses: 3000"
-      );
-      if (input) input.value = 3000;
+    if (!total || total < 1) return;
+
+    const BATCH_SIZE = 50;
+    const DELAY = 120;
+
+    let done = 0;
+
+    function runBatch() {
+      if (done >= total) {
+        console.log("✅ Generate selesai:", done);
+        return;
+      }
+
+      if (input) {
+        input.value = Math.min(BATCH_SIZE, total - done);
+      }
+
+      originalGenerate();
+      done += BATCH_SIZE;
+
+      setTimeout(runBatch, DELAY);
     }
 
-    originalGenerate();
+    runBatch();
   };
 })();
+</script>
 </script>
 
 </body>
