@@ -202,6 +202,40 @@ a.download="cuancreator.txt";
 a.click();
 }
 </script>
+...
+<script src="script.js"></script>
 
+<script>
+/* ===============================
+   SAFETY GENERATE LIMIT (3000)
+   TANPA MERUSAK FILE LEVEL 19–20
+================================ */
+
+(function () {
+  if (typeof window.generate !== "function") return;
+
+  const originalGenerate = window.generate;
+
+  window.generate = function () {
+    const input = document.querySelector('[name="jumlah"], #jumlah, .jumlah-generate');
+    let value = input ? parseInt(input.value || 0) : 0;
+
+    if (value > 3000) {
+      alert(
+        "⚠️ Demi keamanan sistem & browser,\n" +
+        "jumlah generate dibatasi maksimal 3000.\n\n" +
+        "Permintaan kamu: " + value + "\n" +
+        "Diproses: 3000"
+      );
+      if (input) input.value = 3000;
+    }
+
+    originalGenerate();
+  };
+})();
+</script>
+
+</body>
+</html>
 </body>
 </html>
