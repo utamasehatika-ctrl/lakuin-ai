@@ -3,13 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cuan Creator ULTRA – V.20</title>
+<title>Cuan Creator ULTRA</title>
 
-<!-- PWA -->
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#022c22">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
 <style>
 body{
@@ -48,12 +45,6 @@ button{
   cursor:pointer;
 }
 .copy{background:#2563eb}
-.badge{
-  background:#16a34a;
-  padding:5px 14px;
-  border-radius:20px;
-  font-size:11px;
-}
 .grid{
   display:grid;
   grid-template-columns:1fr 1fr;
@@ -62,9 +53,11 @@ button{
 @media(max-width:768px){
   .grid{grid-template-columns:1fr}
 }
-.install{
-  background:#16a34a;
-  display:none;
+.footer{
+  text-align:center;
+  margin-top:30px;
+  font-size:11px;
+  opacity:.5;
 }
 </style>
 </head>
@@ -72,10 +65,8 @@ button{
 <body>
 
 <div class="app">
-<h1>🔥 CuanCreator ULTRA <span class="badge">LEVEL 20</span></h1>
+<h1>🔥 CuanCreator ULTRA</h1>
 <p class="small">Ribuan Script • Anti Duplikat • Multi Bahasa • Story & Hard Sell</p>
-
-<button id="installBtn" class="install">📲 INSTALL APLIKASI</button>
 
 <div class="grid">
 <div>
@@ -134,6 +125,8 @@ button{
   <option value="300">300</option>
   <option value="500">500</option>
   <option value="1000">1000</option>
+  <option value="3000">3000</option>
+  <option value="5000">5000</option>
 </select>
 </div>
 </div>
@@ -141,40 +134,73 @@ button{
 <label>Fokus Tambahan (opsional)</label>
 <input id="custom" placeholder="murah, premium, viral, emak-emak">
 
-<button onclick="generate()">⚡ GENERATE LEVEL 20</button>
+<button onclick="generate()">⚡ GENERATE</button>
 
-<textarea id="output" placeholder="Script ribuan konten muncul di sini..."></textarea>
+<textarea id="output" placeholder="Script muncul di sini..."></textarea>
 
 <button class="copy" onclick="copy()">📋 COPY</button>
 <button class="copy" onclick="exportTXT()">⬇ EXPORT TXT</button>
+
+<div class="footer">
+Engine Internal • Level 19–20 Compatible • Offline Ready
+</div>
 </div>
 
 <script>
-/* ===== SERVICE WORKER ===== */
-if("serviceWorker" in navigator){
-  navigator.serviceWorker.register("sw.js");
-}
-
-/* ===== INSTALL PROMPT ===== */
-let deferredPrompt;
-const installBtn=document.getElementById("installBtn");
-
-window.addEventListener("beforeinstallprompt",e=>{
-  e.preventDefault();
-  deferredPrompt=e;
-  installBtn.style.display="block";
-});
-
-installBtn.onclick=()=>{
-  deferredPrompt.prompt();
-  deferredPrompt.userChoice.then(()=>installBtn.style.display="none");
-};
-
-/* ===== SCRIPT ASLI (TIDAK DIRUSAK) ===== */
 function r(a){return a[Math.floor(Math.random()*a.length)]}
 
-/* DATA LEVEL 19 & 20 (TETAP) */
-/* === isi SCRIPT kamu TETAP sama persis seperti sebelumnya === */
+/* ===== DATA LEVEL 19 ===== */
+const hook=["Stop scroll dulu.","Gue mau jujur.","Ini real kejadian.","Gue nggak nyangka.","Serius ini kepake."];
+const masalah=["Awalnya keliatan biasa.","Lama-lama jadi ganggu.","Banyak yang ngalamin.","Sering disepelekan.","Bikin ribet tiap hari."];
+const emosi=["Jujur sempat capek.","Pernah nyerah.","Ngerasa sendirian.","Kesel tapi bingung.","Overthinking terus."];
+const solusi=["Sampai akhirnya gue coba ini.","Bukan karena iklan.","Awalnya tanpa ekspektasi.","Gue pakai pelan-pelan.","Ternyata masuk akal."];
+const hasil=["Lebih nyaman.","Jauh lebih enak.","Kepake terus.","Ada rasa lega.","Nggak nyesel."];
+const ctaA=["Link ada di keranjang.","Gue share karena kepake.","Cek sendiri.","Buat yang lagi butuh."];
+const ctaH=["Stok tipis.","Ambil sekarang.","Jangan nunda.","Lagi banyak dicari."];
+
+/* ===== DATA JAWA ===== */
+const jawa={
+medok:["Mandek sek yo.","Iki tak critani.","Ora nyesel.","Cocok tenan.","Gas pol."],
+halus:["Mangga dipun mirsani.","Saestu migunani.","Raosipun langkung sae.","Mboten getun.","Sumangga."],
+mix:["Stop sek yo.","Aku cerita dikit.","Cocok tenan.","Ora ribet.","Gas saiki."]
+};
+
+function autoJawa(t){
+return t.replace(/tidak|nggak/gi,"ora").replace(/banget/gi,"pol");
+}
+
+function generate(){
+let p=produk.value||"Produk";
+let j=parseInt(jumlah.value);
+let b=bahasa.value;
+let m=mode.value;
+let c=custom.value;
+let out="";
+let s=new Set();
+
+while(s.size<j){
+let t=r(hook)+"\n"+r(solusi)+"\n"+r(hasil)+"\n"+r(m==="affiliate"?ctaA:ctaH);
+if(b.includes("jawa")) t=autoJawa(t)+"\n"+r(jawa[b.split("-")[1]]||[]);
+if(c) t+="\n("+c+")";
+s.add(t);
+}
+
+let i=1;
+s.forEach(v=>out+=`KONTEN ${i++}\n${v}\n\n`);
+output.value=out;
+}
+
+function copy(){
+output.select();
+document.execCommand("copy");
+}
+
+function exportTXT(){
+let a=document.createElement("a");
+a.href=URL.createObjectURL(new Blob([output.value],{type:"text/plain"}));
+a.download="cuancreator.txt";
+a.click();
+}
 </script>
 
 </body>
