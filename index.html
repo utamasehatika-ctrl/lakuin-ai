@@ -1,1 +1,247 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cuan Creator ULTRA – V.19</title>
 
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#022c22">
+
+<style>
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:linear-gradient(160deg,#020617,#022c22);
+  color:#fff;
+  padding:20px;
+}
+.app{
+  max-width:1300px;
+  margin:auto;
+  background:#0b3a34;
+  padding:30px;
+  border-radius:26px;
+  box-shadow:0 30px 80px rgba(0,0,0,.7);
+}
+h1{text-align:center}
+.small{text-align:center;font-size:13px;opacity:.75}
+label{display:block;margin-top:14px;font-size:13px}
+input,select,textarea,button{
+  width:100%;
+  padding:14px;
+  margin-top:8px;
+  border-radius:14px;
+  border:none;
+}
+textarea{
+  min-height:460px;
+  background:#020617;
+  color:#e5e7eb;
+}
+button{
+  background:linear-gradient(90deg,#22c55e,#38bdf8);
+  font-weight:bold;
+  margin-top:18px;
+  cursor:pointer;
+}
+.copy{background:#2563eb}
+.badge{
+  background:#16a34a;
+  padding:5px 14px;
+  border-radius:20px;
+  font-size:11px;
+}
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
+}
+@media(max-width:768px){
+  .grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+<h1>🔥 CuanCreator ULTRA <span class="badge">LEVEL 19</span></h1>
+<p class="small">Ribuan Script • Anti Duplikat • Multi Kategori • Story & Hard Sell</p>
+
+<div class="grid">
+<div>
+<label>Nama Produk</label>
+<input id="produk" placeholder="contoh: Jaket Wanita Premium">
+</div>
+<div>
+<label>Kategori</label>
+<select id="kategori">
+  <option>Fashion</option>
+  <option>Kosmetik</option>
+  <option>F&B</option>
+  <option>Elektronik</option>
+  <option>Rumah Tangga</option>
+  <option>Otomotif</option>
+</select>
+</div>
+</div>
+
+<div class="grid">
+<div>
+<label>Platform</label>
+<select id="platform">
+  <option>TikTok / Reels</option>
+  <option>Facebook / Instagram</option>
+  <option>Ads</option>
+</select>
+</div>
+<div>
+<label>Jenis Konten</label>
+<select id="mode">
+  <option value="affiliate">Affiliate</option>
+  <option value="story">Story Telling</option>
+  <option value="hard">Hard Selling</option>
+</select>
+</div>
+</div>
+
+<div class="grid">
+<div>
+<label>Bahasa</label>
+<select id="bahasa">
+  <option>Indonesia</option>
+  <option>Indonesia Santai</option>
+  <option>Indonesia Emak-emak</option>
+</select>
+</div>
+<div>
+<label>Jumlah Generate</label>
+<select id="jumlah">
+  <option value="100">100</option>
+  <option value="300">300</option>
+  <option value="500">500</option>
+  <option value="1000">1000</option>
+  <option value="3000">3000</option>
+</select>
+</div>
+</div>
+
+<label>Fokus Tambahan (opsional)</label>
+<input id="custom" placeholder="murah, premium, viral, emak-emak">
+
+<button onclick="generate()">⚡ GENERATE LEVEL 19</button>
+
+<textarea id="output" placeholder="Script ribuan konten muncul di sini..."></textarea>
+
+<button class="copy" onclick="copy()">📋 COPY</button>
+<button class="copy" onclick="exportTXT()">⬇ EXPORT TXT</button>
+</div>
+
+<script>
+function r(a){return a[Math.floor(Math.random()*a.length)]}
+
+const hook=[
+"Stop scroll dulu.",
+"Gue mau jujur.",
+"Ini real kejadian.",
+"Gue nggak nyangka.",
+"Serius ini kepake."
+];
+
+const masalah=[
+"Awalnya keliatan biasa.",
+"Lama-lama jadi ganggu.",
+"Banyak yang ngalamin.",
+"Sering disepelekan.",
+"Bikin ribet tiap hari."
+];
+
+const emosi=[
+"Jujur sempat capek.",
+"Pernah nyerah.",
+"Ngerasa sendirian.",
+"Kesel tapi bingung.",
+"Overthinking terus."
+];
+
+const solusi=[
+"Sampai akhirnya gue coba ini.",
+"Bukan karena iklan.",
+"Awalnya tanpa ekspektasi.",
+"Gue pakai pelan-pelan.",
+"Ternyata masuk akal."
+];
+
+const hasil=[
+"Lebih nyaman.",
+"Jauh lebih enak.",
+"Kepake terus.",
+"Ada rasa lega.",
+"Nggak nyesel."
+];
+
+const ctaAffiliate=[
+"Link ada di keranjang.",
+"Gue share karena kepake.",
+"Cek sendiri.",
+"Buat yang lagi butuh."
+];
+
+const ctaHard=[
+"Stok tipis.",
+"Ambil sekarang.",
+"Jangan nunda.",
+"Lagi banyak dicari."
+];
+
+function generate(){
+  let p=produk.value||"Produk";
+  let k=kategori.value;
+  let m=mode.value;
+  let j=parseInt(jumlah.value);
+  let c=custom.value;
+
+  let out=`🔥 LEVEL 19 ULTRA\nProduk: ${p}\nKategori: ${k}\nMode: ${m.toUpperCase()}\n\n`;
+
+  let unik=new Set();
+
+  while(unik.size<j){
+    let t=`${r(hook)}\n`;
+    if(m!=="affiliate"){
+      t+=`${r(masalah)}\n${r(emosi)}\n`;
+    }
+    t+=`${r(solusi)}\n${r(hasil)}\n`;
+    t+=`${m==="affiliate"?r(ctaAffiliate):r(ctaHard)}\n`;
+    if(c) t+=`(${c})\n`;
+    unik.add(t);
+  }
+
+  let i=1;
+  unik.forEach(v=>{
+    out+=`KONTEN ${i++}\n${v}\n`;
+  });
+
+  out+=`\n🎬 VIDEO PROMPT\nVertical 9:16 cinematic ${p} video, realistic lighting, emotional storytelling, commercial quality, high detail, social media ads style\n`;
+
+  output.value=out;
+}
+
+function copy(){
+  output.select();
+  document.execCommand("copy");
+}
+
+function exportTXT(){
+  let a=document.createElement("a");
+  a.href=URL.createObjectURL(new Blob([output.value],{type:"text/plain"}));
+  a.download="cuancreator-level19.txt";
+  a.click();
+}
+
+if("serviceWorker" in navigator){
+  navigator.serviceWorker.register("sw.js");
+}
+</script>
+
+</body>
+</html>
